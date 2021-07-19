@@ -1,7 +1,8 @@
 server:
     port: 8189
     servlet:
-        context-path: /summer
+        context-path: /
+
 spring:
     datasource:
         driver-class-name: org.h2.Driver
