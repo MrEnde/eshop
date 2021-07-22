@@ -18,6 +18,7 @@ insert into product (name, price, id)
            ('Coffee', 100, 4),
            ('Snacks', 340, 5),
            ('Porridge', 136, 6),
+           ('Cherry', 340, 7),
            ('Meat', 570, 8),
            ('Avocado', 360, 9),
            ('Garlic', 12, 10),
