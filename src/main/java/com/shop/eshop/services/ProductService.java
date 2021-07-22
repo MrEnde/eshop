@@ -4,6 +4,8 @@ import com.shop.eshop.models.Product;
 import com.shop.eshop.repositories.ProductRepository;
 import com.sun.istack.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +17,10 @@ public class ProductService {
 
     public List<Product> findAllProducts() {
         return repository.findAll();
+    }
+
+    public Page<Product> findPage(int pageIndex, int pageSize) {
+        return repository.findAll(PageRequest.of(pageIndex, pageSize));
     }
 
     public Product findById(@NotNull Long id) {
