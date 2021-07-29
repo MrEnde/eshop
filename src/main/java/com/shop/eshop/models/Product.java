@@ -1,5 +1,7 @@
 package com.shop.eshop.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,7 +12,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "product")
+@Builder
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 public class Product {
     @Column(name = "name", nullable = false)
