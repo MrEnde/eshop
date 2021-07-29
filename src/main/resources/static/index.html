@@ -2,14 +2,17 @@
 <html ng-app="app" lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>EShop</title>
+    <title>Summer Market</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
     <script src="index.js"></script>
   </head>
+
   <body ng-controller="indexController">
     <div class="container">
       <h1>Summer Market</h1>
@@ -23,21 +26,77 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="p in products">
-          <td>{{p.id}}</td>
-          <td>{{p.name}}</td>
-          <td>{{p.category}}</td>
-          <td>{{p.price}}</td>
+        <tr ng-repeat="product in productsPage.content">
+          <td>{{product.id}}</td>
+          <td>{{product.name}}</td>
+          <td>{{product.category}}</td>
+          <td>{{product.price}}</td>
           <td>
-            <button class="btn btn-primary" ng-click="deleteProduct(p.id)">Delete</button>
+            <button class="btn btn-primary" ng-click="addToCart(product.id)">В корзину</button>
           </td>
         </tr>
         </tbody>
       </table>
 
-      <h3>Pagination</h3>
-      <button class="btn btn-primary" ng-click="loadPage(1)">1</button>
-      <button class="btn btn-primary" ng-click="loadPage(2)">2</button>
+      <p></p>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li ng-repeat="p in navList" class="page-item">
+            <a class="page-link" ng-click="loadPage(p)">{{p}}</a>
+          </li>
+        </ul>
+      </nav>
+
+      <p></p>
+      <h3>Cart</h3>
+      <span ng-show="cart == null || cart.items.length == 0">Your basket is empty</span>
+      <div ng-show="cart.items.length > 0">
+        <table class="table">
+          <thead>
+          <tr>
+            <td>Name</td>
+            <td>Quantity</td>
+            <td>Price</td>
+            <td></td>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="item in cart.items">
+            <td>{{item.productTitle}}</td>
+            <td>{{item.quantity}}</td>
+            <td>{{item.quantity + ' x ' + item.pricePerProduct + ' = ' + item.price}}</td>
+            <td>
+              <button class="btn btn-danger" ng-click="removeFromCart(item.productId)">Delete (X)</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Total</td>
+            <td></td>
+            <td>{{cart.price}}</td>
+            <td></td>
+          </tr>
+          </tbody>
+        </table>
+        <button class="btn btn-primary" ng-click="createOrder()">Checkout</button>
+        <button class="btn btn-danger" ng-click="clearCart()">Empty trash</button>
+      </div>
+
+      <p></p>
+      <h3>Your orders</h3>
+      <table class="table">
+        <thead>
+        <tr>
+          <td>ID</td>
+          <td>Price</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="order in orders">
+          <td>{{order.id}}</td>
+          <td>{{order.price}}</td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </body>
 </html>
