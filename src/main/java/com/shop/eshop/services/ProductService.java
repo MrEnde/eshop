@@ -1,5 +1,6 @@
 package com.shop.eshop.services;
 
+import com.shop.eshop.exception.ResourceNotFoundException;
 import com.shop.eshop.models.Product;
 import com.shop.eshop.repositories.ProductRepository;
 import com.sun.istack.NotNull;
@@ -8,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,40 +30,32 @@ public class ProductService {
         return repository.findById(id);
     }
 
-    public Long createNewProduct(@NotNull String name, @NotNull Long price) {
-        if (price <= 0) {
-            return (long) -1;
+    public Long createNewProduct(@NotNull String name, @NotNull BigDecimal price) {
+        if (price.intValue() <= 0) {
+            throw new ResourceNotFoundException("Can't create a product with a price " + price);
         }
-        var product = new Product();
-        product.setName(name);
-        product.setPrice(price);
+        var product = Product.builder()
+                .name(name)
+                .price(price)
+                .build();
         return repository.save(product).getId();
     }
 
-    public List<Product> findByMaxPrice(@NotNull Long price) {
-        if(price < 0) {
-            return List.of();
-        }
+    public List<Product> findByMaxPrice(@NotNull BigDecimal price) {
         return repository.findAllByPriceLessThanEqual(price);
     }
 
-    public List<Product> findByMinPrice(@NotNull Long price) {
-        if(price < 0) {
-            return List.of();
-        }
+    public List<Product> findByMinPrice(@NotNull BigDecimal price) {
         return repository.findAllByPriceGreaterThanEqual(price);
     }
 
-    public List<Product> findByPriceBetween(@NotNull Long min, @NotNull Long max) {
-        if (min < 0 || max < 0) {
-            return List.of();
-        }
+    public List<Product> findByPriceBetween(@NotNull BigDecimal min, @NotNull BigDecimal max) {
         return repository.findAllByPriceBetween(min, max);
     }
 
     public void deleteById(Long id) {
         if (id < 0) {
-            return;
+            throw new ResourceNotFoundException("Product not found with " + id);
         }
         repository.deleteById(id);
     }
