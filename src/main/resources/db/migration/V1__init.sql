@@ -18,6 +18,26 @@ create table product
     updated_at  timestamp default current_timestamp
 );
 
+create table orders
+(
+    id bigserial not null primary key,
+    price numeric(8, 2) not null,
+    created_at timestamp default current_timestamp,
+    updated_at timestamp default current_timestamp
+);
+
+create table order_items
+(
+    id bigserial not null primary key,
+    price numeric(8, 2) not null,
+    price_per_product numeric(8, 2) not null,
+    product_id bigint references product (id),
+    order_id bigint references product (id),
+    quantity int not null,
+    created_at timestamp default current_timestamp,
+    updated_at timestamp default current_timestamp
+);
+
 create unique index product_name_uindex
 	on product (name);
 
