@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,8 +24,8 @@ public class ProductService {
         return repository.findAll(PageRequest.of(pageIndex, pageSize));
     }
 
-    public Product findById(@NotNull Long id) {
-        return repository.findById(id).get();
+    public Optional<Product> findById(@NotNull Long id) {
+        return repository.findById(id);
     }
 
     public Long createNewProduct(@NotNull String name, @NotNull Long price) {

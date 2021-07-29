@@ -1,9 +1,9 @@
 angular.module('app', []).controller('indexController', function ($scope, $http) {
-    const mainPath = 'http://localhost:8189/';
+    const mainPath = 'http://localhost:8189/api/v1';
 
     $scope.loadProducts = function () {
         $http({
-            url: mainPath + 'products/',
+            url: mainPath + '/products/',
             method: 'GET',
             params: {}
         }).then(function (response) {
@@ -13,7 +13,7 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
 
     $scope.loadPage = function (pageIndex = 1) {
         $http({
-            url: mainPath + 'products/page',
+            url: mainPath + '/products/page',
             method: 'GET',
             params: {
                 'page': pageIndex
@@ -23,19 +23,10 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
         });
     };
 
-    $scope.showProductInfo = function (productIndex) {
-        $http({
-            url: mainPath + 'products/' + productIndex,
-            method: 'GET'
-        }).then(function (response) {
-            alert(response.data.name);
-        });
-    };
-
     $scope.deleteProduct = function (productIndex) {
         console.log($scope.products)
         $http({
-            url: mainPath + 'products/delete/' + productIndex,
+            url: mainPath + '/products/delete/' + productIndex,
             method: 'GET'
         }).then(function (response) {
             let index = -1;
