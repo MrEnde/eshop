@@ -12,7 +12,7 @@ create table product
         constraint product_pk
             primary key,
     name varchar(255) not null,
-    price bigint not null,
+    price numeric(8, 2) not null,
     category_id bigint references categories (id),
     created_at  timestamp default current_timestamp,
     updated_at  timestamp default current_timestamp
