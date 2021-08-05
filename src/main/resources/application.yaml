@@ -17,6 +17,6 @@ spring:
         open-in-view: false
     h2:
         console:
-        enabled: true
-        settings:
-            web-allow-others: false
+            enabled: true
+            settings:
+                web-allow-others: false
