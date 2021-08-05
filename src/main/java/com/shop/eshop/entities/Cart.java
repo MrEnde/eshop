@@ -13,18 +13,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@NoArgsConstructor
 @Data
 @Slf4j
 public class Cart {
     private List<OrderItemDto> items;
     private BigDecimal price;
 
-    @PostConstruct
-    public void init() {
-        this.items = new ArrayList<>();
-        this.price = BigDecimal.ZERO;
+    public Cart() {
+        items = new ArrayList<>();
+        price = BigDecimal.ZERO;
     }
+
+    // Cannot invoke "java.util.List.iterator()" because "this.items" is null
+//    @PostConstruct
+//    public void init() {
+//        this.items = new ArrayList<>();
+//        this.price = BigDecimal.ZERO;
+//    }
 
     public void clear() {
         items.clear();
