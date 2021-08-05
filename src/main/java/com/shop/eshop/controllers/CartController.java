@@ -2,6 +2,7 @@ package com.shop.eshop.controllers;
 
 import com.shop.eshop.entities.Cart;
 import com.shop.eshop.exception.ResourceNotFoundException;
+import com.shop.eshop.services.CartService;
 import com.shop.eshop.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -10,32 +11,25 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/cart")
 @RequiredArgsConstructor
 public class CartController {
-    private final Cart cart;
-    private final ProductService service;
+    private final CartService service;
 
     @GetMapping
-    public Cart getCart() {
-        return cart;
+    public Cart getCart(@RequestParam String username) {
+        return service.getCartByUsername(username);
     }
 
     @GetMapping("/add/{productId}")
-    public void add(@PathVariable Long productId) {
-        if (!cart.add(productId)) {
-            cart.add(service.findById(productId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Unable add product to cart. Product not found id: " + productId)));
-        }
+    public void add(@PathVariable Long productId, @RequestParam String username) {
+        service.add(username, productId);
     }
 
-    @DeleteMapping("/delete/{productId}")
-    public void delete(@PathVariable Long productId) {
-        if (!cart.delete(productId)) {
-            cart.delete(service.findById(productId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Unable delete product to cart. Product not found id: " + productId)));
-        }
+    @GetMapping("/delete/{productId}")
+    public void delete(@PathVariable Long productId, @RequestParam String username) {
+        service.delete(username, productId);
     }
 
     @GetMapping("/clear")
-    public void clear() {
-        cart.clear();
+    public void clear(@RequestParam String username) {
+        service.clear(username);
     }
 }
