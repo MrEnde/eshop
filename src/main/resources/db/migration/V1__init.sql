@@ -1,7 +1,7 @@
 create table categories
 (
-    id         bigserial primary key not null,
-    title      varchar(255) not null,
+    id bigserial primary key not null,
+    title varchar(255) not null,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp
 );
@@ -12,10 +12,30 @@ create table product
         constraint product_pk
             primary key,
     name varchar(255) not null,
-    price bigint not null,
+    price numeric(8, 2) not null,
     category_id bigint references categories (id),
     created_at  timestamp default current_timestamp,
     updated_at  timestamp default current_timestamp
+);
+
+create table orders
+(
+    id bigserial not null primary key,
+    price numeric(8, 2) not null,
+    created_at timestamp default current_timestamp,
+    updated_at timestamp default current_timestamp
+);
+
+create table order_items
+(
+    id bigserial not null primary key,
+    price numeric(8, 2) not null,
+    price_per_product numeric(8, 2) not null,
+    product_id bigint references product (id),
+    order_id bigint references product (id),
+    quantity int not null,
+    created_at timestamp default current_timestamp,
+    updated_at timestamp default current_timestamp
 );
 
 create unique index product_name_uindex

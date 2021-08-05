@@ -11,27 +11,34 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "product")
 @Builder
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product {
-    @Column(name = "name", nullable = false)
-    private String name;
-
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
-
+@Data
+@Entity
+@Table(name = "order_items")
+public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "price", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    @Column(name = "price_per_product")
+    private BigDecimal pricePerProduct;
+
+    @Column(name = "price")
     private BigDecimal price;
+
+    @Column(name = "quantity")
+    private int quantity;
 
     @CreationTimestamp
     @Column(name = "created_at")

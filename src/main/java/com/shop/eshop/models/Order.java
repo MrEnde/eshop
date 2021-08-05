@@ -4,33 +4,32 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
-@Entity
-@Table(name = "product")
 @Builder
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product {
-    @Column(name = "name", nullable = false)
-    private String name;
-
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
-
+@Data
+@Entity
+@Table(name = "orders")
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "price", nullable = false)
+    @OneToMany(mappedBy = "order")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private List<OrderItem> items;
+
+    @Column(name = "price")
     private BigDecimal price;
 
     @CreationTimestamp
@@ -41,3 +40,4 @@ public class Product {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 }
+
