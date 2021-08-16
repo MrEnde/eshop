@@ -24,13 +24,6 @@ public class Cart {
         price = BigDecimal.ZERO;
     }
 
-    // Cannot invoke "java.util.List.iterator()" because "this.items" is null
-//    @PostConstruct
-//    public void init() {
-//        this.items = new ArrayList<>();
-//        this.price = BigDecimal.ZERO;
-//    }
-
     public void clear() {
         items.clear();
         price = BigDecimal.ZERO;
@@ -74,6 +67,22 @@ public class Cart {
             items.remove(index);
         }
         recalculate();
+    }
+
+    public boolean changeQuantity(Long productId, int amount) {
+        var iter = items.iterator();
+        while (iter.hasNext()) {
+            OrderItemDto o = iter.next();
+            if (o.getProductId().equals(productId)) {
+                o.changeQuantity(amount);
+                if (o.getQuantity() <= 0) {
+                    iter.remove();
+                }
+                recalculate();
+                return true;
+            }
+        }
+        return false;
     }
 
     private void recalculate() {
