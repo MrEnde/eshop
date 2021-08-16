@@ -41,7 +41,7 @@ public class Order {
     private LocalDateTime updatedAt;
 
     @ManyToOne
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private User user;
 }
 
