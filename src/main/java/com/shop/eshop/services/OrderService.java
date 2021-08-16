@@ -8,26 +8,30 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManagerFactory;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
     private final ProductService productService;
-    private final UserService userService;
     private final CartService cartService;
+    private final EntityManagerFactory entityManagerFactory;
 
     @Transactional
-    public void createOrder(String username) {
-        var cart = cartService.getCartByUsername(username);
+    public void createOrder(String address, String phone) {
+        var cart = cartService.getCart();
 
         var order = Order.builder()
                 .price(cart.getPrice())
                 .items(new ArrayList<>())
-                .user(userService.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("User not found")))
+                .address(address)
+                .phone(phone)
                 .build();
         for (var item : cart.getItems()) {
             var product = productService.findById(item.getProductId())
@@ -42,10 +46,12 @@ public class OrderService {
             order.getItems().add(orderItem);
         }
         orderRepository.save(order);
-        cart.clear();
     }
 
-    public List<Order> findAll(String username) {
-        return orderRepository.findAllByUser(userService.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("User not found")));
+    public List<Order> findAll() {
+        var entityManager = entityManagerFactory.createEntityManager();
+        var entityGraph = entityManager.getEntityGraph("order-items");
+        entityManager.setProperty("javax.persistence.fetchgraph", entityGraph);
+        return entityManager.createQuery("SELECT order FROM Order order", Order.class).getResultList();
     }
 }

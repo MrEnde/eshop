@@ -1,5 +1,6 @@
 package com.shop.eshop.dto;
 
+import com.shop.eshop.models.OrderItem;
 import com.shop.eshop.models.Product;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,14 @@ public class OrderItemDto {
         this.pricePerProduct = product.getPrice();
         this.price = product.getPrice();
         this.productName = product.getName();
+    }
+
+    public OrderItemDto(OrderItem orderItem) {
+        this.productId = orderItem.getId();
+        this.quantity = orderItem.getQuantity();
+        this.pricePerProduct = orderItem.getPricePerProduct();
+        this.price = orderItem.getPrice();
+        this.productName = orderItem.getProduct().getName();
     }
 
     public void changeQuantity(int amount) {
