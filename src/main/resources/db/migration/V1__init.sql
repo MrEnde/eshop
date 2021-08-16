@@ -49,6 +49,8 @@ create table orders
     id bigserial not null primary key,
     price numeric(8, 2) not null,
     user_id bigint references users (id),
+    address varchar(255) not null,
+    phone varchar(32) not null,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp
 );
