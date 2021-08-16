@@ -2,7 +2,7 @@ package com.shop.eshop.controllers;
 
 import com.shop.eshop.dto.CategoryDto;
 import com.shop.eshop.exception.ResourceNotFoundException;
-import com.shop.eshop.factory.CategoryFactory;
+import com.shop.eshop.mappers.CategoryMapper;
 import com.shop.eshop.services.CategoryService;
 import lombok.RequiredArgsConstructor;;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CategoryController {
     private final CategoryService service;
-    private final CategoryFactory factory;
+    private final CategoryMapper factory;
 
     @GetMapping("/{id}")
     public CategoryDto findById(@PathVariable Long id) {
