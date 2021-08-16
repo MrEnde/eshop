@@ -1,7 +1,5 @@
 package com.shop.eshop.services;
 
-import com.shop.eshop.dto.OrderItemDto;
-import com.shop.eshop.entities.Cart;
 import com.shop.eshop.exception.ResourceNotFoundException;
 import com.shop.eshop.models.Order;
 import com.shop.eshop.models.OrderItem;
@@ -19,13 +17,17 @@ import java.util.List;
 public class OrderService {
     private final OrderRepository orderRepository;
     private final ProductService productService;
-    private final Cart cart;
+    private final UserService userService;
+    private final CartService cartService;
 
     @Transactional
-    public void createOrder() {
+    public void createOrder(String username) {
+        var cart = cartService.getCartByUsername(username);
+
         var order = Order.builder()
                 .price(cart.getPrice())
                 .items(new ArrayList<>())
+                .user(userService.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("User not found")))
                 .build();
         for (var item : cart.getItems()) {
             var product = productService.findById(item.getProductId())
@@ -43,7 +45,7 @@ public class OrderService {
         cart.clear();
     }
 
-    public List<Order> findAll() {
-        return orderRepository.findAll();
+    public List<Order> findAll(String username) {
+        return orderRepository.findAllByUser(userService.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("User not found")));
     }
 }

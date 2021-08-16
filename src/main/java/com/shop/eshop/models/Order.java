@@ -39,5 +39,9 @@ public class Order {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @ManyToOne
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private User user;
 }
 
