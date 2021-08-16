@@ -17,6 +17,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@NamedEntityGraph(name = "order-items",
+        attributeNodes = @NamedAttributeNode("items")
+)
 @Entity
 @Table(name = "orders")
 public class Order {
