@@ -1,14 +1,13 @@
-package com.shop.eshop.factory;
+package com.shop.eshop.mappers;
 
 import com.shop.eshop.dto.OrderDto;
 import com.shop.eshop.models.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
-public class OrderFactory {
+public class OrderMapper {
     public OrderDto toOrderDto(Order order) {
         return new OrderDto(order);
     }
@@ -17,6 +16,6 @@ public class OrderFactory {
         return orders
                 .parallelStream()
                 .map(OrderDto::new)
-                .collect(Collectors.toList());
+                .toList();
     }
 }
