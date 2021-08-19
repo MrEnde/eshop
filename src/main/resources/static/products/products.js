@@ -20,7 +20,6 @@ angular.module('app').controller('productsController', function ($scope, $http, 
         }).then(function (response) {
             $scope.productsPage = response.data;
             $scope.navList = $scope.generatePagesIndexes(1, $scope.productsPage.totalPages);
-            console.log(response.data);
         });
     };
 
