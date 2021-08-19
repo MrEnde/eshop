@@ -3,10 +3,12 @@ package com.shop.eshop.services;
 import com.shop.eshop.exception.ResourceNotFoundException;
 import com.shop.eshop.models.Product;
 import com.shop.eshop.repositories.ProductRepository;
+import com.shop.eshop.repositories.specification.ProductSpecifications;
 import com.sun.istack.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -17,6 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository repository;
+    private final ProductSpecifications specifications;
 
     public Page<Product> findPage(
             int pageIndex, int pageSize,
