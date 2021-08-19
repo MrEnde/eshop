@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
 @Data
 @Slf4j
 public class Cart {
