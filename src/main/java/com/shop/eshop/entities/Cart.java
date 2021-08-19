@@ -69,7 +69,7 @@ public class Cart {
         recalculate();
     }
 
-    public boolean changeQuantity(Long productId, int amount) {
+    public void changeQuantity(Long productId, int amount) {
         var iter = items.iterator();
         while (iter.hasNext()) {
             OrderItemDto o = iter.next();
@@ -79,10 +79,9 @@ public class Cart {
                     iter.remove();
                 }
                 recalculate();
-                return true;
+                return;
             }
         }
-        return false;
     }
 
     private void recalculate() {
