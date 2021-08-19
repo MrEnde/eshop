@@ -35,6 +35,6 @@ public class OrderController {
 
     @GetMapping
     public List<OrderDto> getAllOrders() {
-        return mapper.toListOrderDto(service.findAll());
+        return mapper.map(service.findAll());
     }
 }

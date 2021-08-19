@@ -2,20 +2,25 @@ package com.shop.eshop.mappers;
 
 import com.shop.eshop.dto.OrderDto;
 import com.shop.eshop.models.Order;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-@Component
-public class OrderMapper {
-    public OrderDto toOrderDto(Order order) {
-        return new OrderDto(order);
-    }
+@Mapper(
+        componentModel = "spring"
+)
+public abstract class OrderMapper {
+    @Autowired
+    protected OrderItemMapper orderItemMapper;
 
-    public List<OrderDto> toListOrderDto(List<Order> orders) {
-        return orders
-                .parallelStream()
-                .map(OrderDto::new)
-                .toList();
-    }
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "price", target = "price")
+    @Mapping(source = "phone", target = "phone")
+    @Mapping(source = "address", target = "address")
+    @Mapping(expression = "java(order.getItems().parallelStream().map(orderItemMapper::map).toList())", target = "items")
+    public abstract OrderDto map(Order order);
+
+    public abstract List<OrderDto> map(List<Order> orders);
 }

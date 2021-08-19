@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CategoryController {
     private final CategoryService service;
-    private final CategoryMapper factory;
+    private final CategoryMapper mapper;
 
     @GetMapping("/{id}")
     public CategoryDto findById(@PathVariable Long id) {
         var category = service.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found, id: " + id));
-        return factory.toCategoryDto(category);
+        return mapper.map(category);
     }
 }

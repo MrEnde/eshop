@@ -2,25 +2,26 @@ package com.shop.eshop.mappers;
 
 import com.shop.eshop.dto.ProductDto;
 import com.shop.eshop.models.Product;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Component;
+
 
 import java.util.List;
 
-@Component
-public class ProductMapper {
-    public List<ProductDto> toProductDtoList(List<Product> products) {
-        return products
-                .parallelStream()
-                .map(ProductDto::new)
-                .toList();
-    }
+@Mapper(
+        componentModel = "spring"
+)
+public abstract class ProductMapper {
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "name", target = "name")
+    @Mapping(expression = "java(product.getCategory().getTitle())", target = "category")
+    @Mapping(source = "price", target = "price")
+    public abstract ProductDto map(Product product);
 
-    public Page<ProductDto> toProductDtoPage(Page<Product> products) {
-        return products.map(ProductDto::new);
-    }
+    public abstract  List<ProductDto> map(List<Product> products);
 
-    public ProductDto toProductDto(Product product) {
-        return new ProductDto(product);
+    public Page<ProductDto> map(Page<Product> products) {
+        return products.map(this::map);
     }
 }
