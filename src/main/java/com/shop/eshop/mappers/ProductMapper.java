@@ -1,4 +1,4 @@
-package com.shop.eshop.factory;
+package com.shop.eshop.mappers;
 
 import com.shop.eshop.dto.ProductDto;
 import com.shop.eshop.models.Product;
@@ -6,15 +6,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
-public class ProductFactory {
+public class ProductMapper {
     public List<ProductDto> toProductDtoList(List<Product> products) {
         return products
                 .parallelStream()
                 .map(ProductDto::new)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public Page<ProductDto> toProductDtoPage(Page<Product> products) {

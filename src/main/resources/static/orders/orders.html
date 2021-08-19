@@ -1,0 +1,30 @@
+<div>
+    <p></p>
+    <h3>Ваши заказы</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <td>ID</td>
+            <td>Детали</td>
+            <td>Адрес доставки</td>
+            <td>Телефон</td>
+            <td>Цена</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="order in orders">
+            <td>{{order.id}}</td>
+            <td>
+                <div ng-repeat="item in order.items">
+                    <span>{{item.productName + ' x' + item.quantity}}</span>
+                    <p></p>
+                </div>
+
+            </td>
+            <td>{{order.address}}</td>
+            <td>{{order.phone}}</td>
+            <td>{{order.price}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

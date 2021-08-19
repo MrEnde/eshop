@@ -2,7 +2,7 @@ package com.shop.eshop.controllers;
 
 import com.shop.eshop.dto.ProductDto;
 import com.shop.eshop.exception.ResourceNotFoundException;
-import com.shop.eshop.factory.ProductFactory;
+import com.shop.eshop.mappers.ProductMapper;
 import com.shop.eshop.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService service;
-    private final ProductFactory factory;
+    private final ProductMapper factory;
     private final int DEFAULT_SIZE_PAGE = 10;
 
     @GetMapping("")

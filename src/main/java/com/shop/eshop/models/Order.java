@@ -17,6 +17,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@NamedEntityGraph(name = "order-items",
+        attributeNodes = @NamedAttributeNode("items")
+)
 @Entity
 @Table(name = "orders")
 public class Order {
@@ -32,6 +35,12 @@ public class Order {
     @Column(name = "price")
     private BigDecimal price;
 
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "phone")
+    private String phone;
+
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -41,7 +50,7 @@ public class Order {
     private LocalDateTime updatedAt;
 
     @ManyToOne
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private User user;
 }
 
