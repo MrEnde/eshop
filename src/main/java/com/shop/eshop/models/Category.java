@@ -9,6 +9,9 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@NamedEntityGraph(name = "category-with-products",
+        attributeNodes = @NamedAttributeNode("products")
+)
 @Entity
 @Table(name = "categories")
 @Data
