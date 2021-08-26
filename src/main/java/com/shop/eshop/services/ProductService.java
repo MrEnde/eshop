@@ -3,10 +3,12 @@ package com.shop.eshop.services;
 import com.shop.eshop.exception.ResourceNotFoundException;
 import com.shop.eshop.models.Product;
 import com.shop.eshop.repositories.ProductRepository;
+import com.shop.eshop.repositories.specification.ProductSpecifications;
 import com.sun.istack.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -17,13 +19,23 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository repository;
+    private final ProductSpecifications specifications;
 
-    public List<Product> findAllProducts() {
-        return repository.findAll();
-    }
-
-    public Page<Product> findPage(int pageIndex, int pageSize) {
-        return repository.findAll(PageRequest.of(pageIndex, pageSize));
+    public Page<Product> findPage(
+            int pageIndex, int pageSize,
+            BigDecimal maxPrice, BigDecimal minPrice, String title
+    ) {
+        Specification<Product> spec = Specification.where(null);
+        if (maxPrice != null) {
+            spec = spec.and(specifications.priceLessOrEqualsThan(maxPrice));
+        }
+        if (minPrice != null) {
+            spec = spec.and(specifications.priceGreaterOrEqualsThan(minPrice));
+        }
+        if (title != null) {
+            spec = spec.and(specifications.titleLike(title));
+        }
+        return repository.findAll(spec, PageRequest.of(pageIndex, pageSize));
     }
 
     public Optional<Product> findById(@NotNull Long id) {
@@ -39,14 +51,6 @@ public class ProductService {
                 .price(price)
                 .build();
         return repository.save(product).getId();
-    }
-
-    public List<Product> findByMaxPrice(@NotNull BigDecimal price) {
-        return repository.findAllByPriceLessThanEqual(price);
-    }
-
-    public List<Product> findByMinPrice(@NotNull BigDecimal price) {
-        return repository.findAllByPriceGreaterThanEqual(price);
     }
 
     public List<Product> findByPriceBetween(@NotNull BigDecimal min, @NotNull BigDecimal max) {

@@ -17,13 +17,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService service;
-    private final ProductMapper factory;
+    private final ProductMapper mapper;
     private final int DEFAULT_SIZE_PAGE = 10;
-
-    @GetMapping("")
-    public Page<ProductDto> findAllProductsByPage(@RequestParam(name = "page") int pageIndex) {
-        return factory.toProductDtoPage(service.findPage(pageIndex - 1, DEFAULT_SIZE_PAGE));
-    }
 
     @PostMapping("/add/")
     public Long createNewProduct(@RequestParam String name, @RequestParam BigDecimal price) {
@@ -34,12 +29,22 @@ public class ProductController {
     public ProductDto findById(@PathVariable Long id) {
         var product = service.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found, id: " + id));
-        return factory.toProductDto(product);
+        return mapper.map(product);
+    }
+
+    @GetMapping
+    public Page<ProductDto> findAll(
+            @RequestParam(name = "page", defaultValue = "1") int pageIndex,
+            @RequestParam(name = "min_price", required = false) BigDecimal minPrice,
+            @RequestParam(name = "max_price", required = false) BigDecimal maxPrice,
+            @RequestParam(name = "title", required = false) String title
+    ) {
+        return mapper.map(service.findPage(pageIndex - 1, DEFAULT_SIZE_PAGE, maxPrice, minPrice, title));
     }
 
     @GetMapping("/find_by_price")
     public List<ProductDto> findAllByPriceBetween(@RequestParam BigDecimal min, @RequestParam BigDecimal max) {
-        return factory.toProductDtoList(service.findByPriceBetween(min, max));
+        return mapper.map(service.findByPriceBetween(min, max));
     }
 
     @DeleteMapping("/delete/{id}")

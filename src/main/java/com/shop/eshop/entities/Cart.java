@@ -1,27 +1,27 @@
 package com.shop.eshop.entities;
 
 import com.shop.eshop.dto.OrderItemDto;
+import com.shop.eshop.mappers.OrderItemMapper;
+import com.shop.eshop.mappers.OrderItemMapperImpl;
 import com.shop.eshop.models.Product;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
 @Data
 @Slf4j
 public class Cart {
     private List<OrderItemDto> items;
     private BigDecimal price;
+    private OrderItemMapper mapper;
 
     public Cart() {
         items = new ArrayList<>();
         price = BigDecimal.ZERO;
+        mapper = new OrderItemMapperImpl();
     }
 
     public void clear() {
@@ -41,7 +41,7 @@ public class Cart {
     }
 
     public void add(Product product) {
-        items.add(new OrderItemDto(product));
+        items.add(mapper.map(product));
         recalculate();
     }
 
@@ -69,7 +69,7 @@ public class Cart {
         recalculate();
     }
 
-    public boolean changeQuantity(Long productId, int amount) {
+    public void changeQuantity(Long productId, int amount) {
         var iter = items.iterator();
         while (iter.hasNext()) {
             OrderItemDto o = iter.next();
@@ -79,10 +79,9 @@ public class Cart {
                     iter.remove();
                 }
                 recalculate();
-                return true;
+                return;
             }
         }
-        return false;
     }
 
     private void recalculate() {
