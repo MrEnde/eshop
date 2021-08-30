@@ -17,8 +17,16 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@NamedEntityGraph(name = "order-items",
-        attributeNodes = @NamedAttributeNode("items")
+@NamedEntityGraph(name = "order-with-items",
+        attributeNodes = @NamedAttributeNode(value = "items", subgraph = "item-subgraph"),
+        subgraphs = {
+        @NamedSubgraph(
+                name = "item-subgraph",
+                attributeNodes = {
+                        @NamedAttributeNode("product")
+                }
+        )
+    }
 )
 @Entity
 @Table(name = "orders")

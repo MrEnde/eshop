@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManagerFactory;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +18,6 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final ProductService productService;
     private final CartService cartService;
-    private final EntityManagerFactory entityManagerFactory;
 
     @Transactional
     public void createOrder(String address, String phone) {
@@ -47,9 +45,6 @@ public class OrderService {
     }
 
     public List<Order> findAll() {
-        var entityManager = entityManagerFactory.createEntityManager();
-        var entityGraph = entityManager.getEntityGraph("order-items");
-        entityManager.setProperty("javax.persistence.fetchgraph", entityGraph);
-        return entityManager.createQuery("SELECT order FROM Order order", Order.class).getResultList();
+        return orderRepository.findAll();
     }
 }
