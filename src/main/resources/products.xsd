@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <xs:schema
         xmlns:xs="http://www.w3.org/2001/XMLSchema"
-        xmlns:tns="http://example.com/api/v1/ws/products"
-        targetNamespace="http://example.com/api/v1/ws/products" elementFormDefault="qualified">
+        xmlns:tns="http://localhost:8189/api/v1/ws/products"
+        targetNamespace="http://localhost:8189/api/v1/ws/products" elementFormDefault="qualified">
 
     <xs:element name="getProductByIdRequest">
         <xs:complexType>

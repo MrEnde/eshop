@@ -5,5 +5,5 @@
 // Generated on: 2021.08.30 at 05:50:23 PM GMT+03:00 
 //
 
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://example.com/api/v1/ws/products", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+@javax.xml.bind.annotation.XmlSchema(namespace = "http://localhost:8189/api/v1/ws/products", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
 package com.shop.eshop.soap.products;
