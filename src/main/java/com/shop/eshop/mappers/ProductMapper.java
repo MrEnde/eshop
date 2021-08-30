@@ -12,16 +12,15 @@ import java.util.List;
 @Mapper(
         componentModel = "spring"
 )
-public abstract class ProductMapper {
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "name", target = "name")
+public interface ProductMapper {
     @Mapping(expression = "java(product.getCategory().getTitle())", target = "category")
-    @Mapping(source = "price", target = "price")
-    public abstract ProductDto map(Product product);
+    ProductDto map(Product product);
 
-    public abstract  List<ProductDto> map(List<Product> products);
+    com.shop.eshop.soap.products.Product mapSoap(Product product);
 
-    public Page<ProductDto> map(Page<Product> products) {
+    List<ProductDto> map(List<Product> products);
+
+    default Page<ProductDto> map(Page<Product> products) {
         return products.map(this::map);
     }
 }
