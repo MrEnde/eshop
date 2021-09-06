@@ -1,4 +1,4 @@
-package com.shop.eshop.models;
+package com.shop.eshop.category;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,8 +25,10 @@ public class Category {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @OneToMany(mappedBy = "category")
-    private List<Product> products;
+    @ElementCollection
+    @CollectionTable(name="products")
+    @Column(name = "products", nullable = false)
+    private List<Long> products;
 
     @CreationTimestamp
     @Column(name = "created_at")

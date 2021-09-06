@@ -1,9 +1,7 @@
-package com.shop.eshop.controllers;
+package com.shop.eshop.category;
 
-import com.shop.eshop.dto.CategoryDto;
-import com.shop.eshop.exception.ResourceNotFoundException;
-import com.shop.eshop.mappers.CategoryMapper;
-import com.shop.eshop.services.CategoryService;
+import com.shop.eshop.common.dto.CategoryDto;
+import com.shop.eshop.common.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

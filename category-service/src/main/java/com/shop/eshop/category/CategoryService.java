@@ -1,7 +1,5 @@
-package com.shop.eshop.services;
+package com.shop.eshop.category;
 
-import com.shop.eshop.models.Category;
-import com.shop.eshop.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

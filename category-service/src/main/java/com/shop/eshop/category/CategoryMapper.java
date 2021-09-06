@@ -1,7 +1,6 @@
-package com.shop.eshop.mappers;
+package com.shop.eshop.category;
 
-import com.shop.eshop.dto.CategoryDto;
-import com.shop.eshop.models.Category;
+import com.shop.eshop.common.dto.CategoryDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
