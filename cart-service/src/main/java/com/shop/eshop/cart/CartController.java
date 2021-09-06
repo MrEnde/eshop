@@ -1,7 +1,6 @@
-package com.shop.eshop.controllers;
+package com.shop.eshop.cart;
 
-import com.shop.eshop.entities.Cart;
-import com.shop.eshop.services.CartService;
+import com.shop.eshop.common.dto.CartDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,10 +9,11 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class CartController {
     private final CartService service;
+    private final CartMapper mapper;
 
     @GetMapping
-    public Cart getCart() {
-        return service.getCart();
+    public CartDto getCart() {
+        return mapper.map(service.getCart());
     }
 
     @GetMapping("/add/{productId}")
