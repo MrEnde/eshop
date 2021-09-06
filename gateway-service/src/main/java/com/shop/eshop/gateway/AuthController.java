@@ -1,10 +1,8 @@
-package com.shop.eshop.controllers;
+package com.shop.eshop.gateway;
 
-import com.shop.eshop.configs.JwtTokenUtil;
-import com.shop.eshop.dto.JwtRequest;
-import com.shop.eshop.dto.JwtResponse;
-import com.shop.eshop.exception.MarketError;
-import com.shop.eshop.services.UserService;
+import com.shop.eshop.common.dto.JwtRequest;
+import com.shop.eshop.common.dto.JwtResponse;
+import com.shop.eshop.common.exceptions.MarketError;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

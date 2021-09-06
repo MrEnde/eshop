@@ -1,4 +1,4 @@
-package com.shop.eshop.configs;
+package com.shop.eshop.gateway;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -12,21 +12,20 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Component
 public class JwtTokenUtil {
-    @Value("${jwt.secret}")
+    @Value("${security.jwt.secret}")
     private String secret;
 
-    @Value("${jwt.lifetime}")
+    @Value("${security.jwt.lifetime}")
     private Integer jwtLifetime;
 
     public String generateToken(UserDetails userDetails) {
         var claims = new HashMap<String, Object>();
         var rolesList = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
+                .toList();
         claims.put("roles", rolesList);
 
         var issuedDate = new Date();
