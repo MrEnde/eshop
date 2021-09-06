@@ -1,4 +1,4 @@
-package com.shop.eshop.models;
+package com.shop.eshop.user;
 
 import lombok.Data;
 

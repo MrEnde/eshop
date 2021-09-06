@@ -1,9 +1,7 @@
-package com.shop.eshop.services;
+package com.shop.eshop.user;
 
-import com.shop.eshop.models.Role;
-import com.shop.eshop.models.User;
-import com.shop.eshop.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,8 +23,9 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
+    @SneakyThrows
     @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
         var user = findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", username)));
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
     }

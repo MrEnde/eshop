@@ -1,4 +1,4 @@
-package com.shop.eshop.repositories;
+package com.shop.eshop.user;
 
 import com.shop.eshop.models.User;
 import org.springframework.data.repository.CrudRepository;
