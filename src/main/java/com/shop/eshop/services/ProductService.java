@@ -38,6 +38,10 @@ public class ProductService {
         return repository.findAll(spec, PageRequest.of(pageIndex, pageSize));
     }
 
+    public Optional<List<Product>> findAll() {
+        return Optional.of(repository.findAll());
+    }
+
     public Optional<Product> findById(@NotNull Long id) {
         return repository.findById(id);
     }

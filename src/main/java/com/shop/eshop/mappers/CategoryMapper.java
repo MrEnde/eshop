@@ -8,10 +8,7 @@ import org.mapstruct.Mapping;
 @Mapper(
         componentModel = "spring"
 )
-public abstract class CategoryMapper {
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "title", target = "title")
+public interface CategoryMapper {
     @Mapping( expression = "java(category.getProducts().stream().map(product -> product.getId()).toList())", target = "products")
-    public abstract CategoryDto map(Category category);
-
+    CategoryDto map(Category category);
 }
