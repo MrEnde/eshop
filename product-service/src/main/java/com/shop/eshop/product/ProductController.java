@@ -1,9 +1,7 @@
-package com.shop.eshop.controllers;
+package com.shop.eshop.product;
 
-import com.shop.eshop.dto.ProductDto;
-import com.shop.eshop.exception.ResourceNotFoundException;
-import com.shop.eshop.mappers.ProductMapper;
-import com.shop.eshop.services.ProductService;
+import com.shop.eshop.common.dto.ProductDto;
+import com.shop.eshop.common.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;

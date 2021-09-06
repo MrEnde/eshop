@@ -1,16 +1,13 @@
-package com.shop.eshop.services;
+package com.shop.eshop.product;
 
-import com.shop.eshop.exception.ResourceNotFoundException;
-import com.shop.eshop.models.Product;
-import com.shop.eshop.repositories.ProductRepository;
-import com.shop.eshop.repositories.specification.ProductSpecifications;
-import com.sun.istack.NotNull;
+import com.shop.eshop.common.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;

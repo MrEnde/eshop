@@ -1,7 +1,6 @@
-package com.shop.eshop.mappers;
+package com.shop.eshop.product;
 
-import com.shop.eshop.dto.ProductDto;
-import com.shop.eshop.models.Product;
+import com.shop.eshop.common.dto.ProductDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.data.domain.Page;
@@ -15,8 +14,6 @@ import java.util.List;
 public interface ProductMapper {
     @Mapping(expression = "java(product.getCategory().getTitle())", target = "category")
     ProductDto map(Product product);
-
-    com.shop.eshop.soap.products.Product mapSoap(Product product);
 
     List<ProductDto> map(List<Product> products);
 

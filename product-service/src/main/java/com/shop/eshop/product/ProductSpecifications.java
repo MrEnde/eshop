@@ -1,6 +1,5 @@
-package com.shop.eshop.repositories.specification;
+package com.shop.eshop.product;
 
-import com.shop.eshop.models.Product;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 

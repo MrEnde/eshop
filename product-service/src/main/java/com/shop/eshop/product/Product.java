@@ -1,4 +1,4 @@
-package com.shop.eshop.models;
+package com.shop.eshop.product;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,9 +21,9 @@ public class Product {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @CollectionTable(name="category", joinColumns = @JoinColumn(name = "category_id"))
+    @Column(name = "category", nullable = false)
+    private Long category;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
