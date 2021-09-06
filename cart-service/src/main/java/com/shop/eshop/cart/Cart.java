@@ -1,27 +1,25 @@
-package com.shop.eshop.entities;
+package com.shop.eshop.cart;
 
-import com.shop.eshop.dto.OrderItemDto;
-import com.shop.eshop.mappers.OrderItemMapper;
-import com.shop.eshop.mappers.OrderItemMapperImpl;
-import com.shop.eshop.models.Product;
+import com.shop.eshop.common.dto.OrderItemDto;
+import com.shop.eshop.common.dto.ProductDto;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @Slf4j
+@Component("single")
 public class Cart {
     private List<OrderItemDto> items;
     private BigDecimal price;
-    private OrderItemMapper mapper;
 
-    public Cart() {
-        items = new ArrayList<>();
+    @PostConstruct
+    public void init() {
         price = BigDecimal.ZERO;
-        mapper = new OrderItemMapperImpl();
     }
 
     public void clear() {
@@ -40,8 +38,8 @@ public class Cart {
         return false;
     }
 
-    public void add(Product product) {
-        items.add(mapper.map(product));
+    public void add(OrderItemDto orderItemDto) {
+        items.add(orderItemDto);
         recalculate();
     }
 
@@ -56,7 +54,7 @@ public class Cart {
         return false;
     }
 
-    public void delete(Product product) {
+    public void delete(ProductDto product) {
         int index = -1;
         for (OrderItemDto item : items) {
             if (item.getProductId().equals(product.getId())) {
