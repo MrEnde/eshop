@@ -1,10 +1,8 @@
-package com.shop.eshop.mappers;
+package com.shop.eshop.order;
 
-import com.shop.eshop.dto.OrderDto;
-import com.shop.eshop.models.Order;
+import com.shop.eshop.common.dto.OrderDto;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import java.util.List;
 

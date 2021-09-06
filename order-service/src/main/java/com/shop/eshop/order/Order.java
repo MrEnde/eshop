@@ -1,4 +1,4 @@
-package com.shop.eshop.models;
+package com.shop.eshop.order;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -57,8 +57,8 @@ public class Order {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @CollectionTable(name="user", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "user", nullable = false)
+    private Long user;
 }
 

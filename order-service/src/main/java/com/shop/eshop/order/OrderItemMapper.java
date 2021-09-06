@@ -1,8 +1,7 @@
-package com.shop.eshop.mappers;
+package com.shop.eshop.order;
 
-import com.shop.eshop.dto.OrderItemDto;
-import com.shop.eshop.models.OrderItem;
-import com.shop.eshop.models.Product;
+import com.shop.eshop.common.dto.OrderItemDto;
+import com.shop.eshop.common.dto.ProductDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -15,7 +14,7 @@ public interface OrderItemMapper {
     @Mapping(source = "price", target = "price")
     @Mapping(source = "name", target = "productName")
     @Mapping(expression = "java(1)", target = "quantity")
-    OrderItemDto map(Product product);
+    OrderItemDto map(ProductDto product);
 
     @Mapping(source = "id", target = "productId")
     @Mapping(source = "pricePerProduct", target = "pricePerProduct")

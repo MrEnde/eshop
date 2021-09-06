@@ -1,9 +1,7 @@
-package com.shop.eshop.controllers;
+package com.shop.eshop.order;
 
-import com.shop.eshop.dto.OrderDto;
-import com.shop.eshop.exception.InvalidInputDataException;
-import com.shop.eshop.mappers.OrderMapper;
-import com.shop.eshop.services.OrderService;
+import com.shop.eshop.common.dto.OrderDto;
+import com.shop.eshop.common.exceptions.InvalidInputDataException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

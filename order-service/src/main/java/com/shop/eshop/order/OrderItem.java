@@ -1,4 +1,4 @@
-package com.shop.eshop.models;
+package com.shop.eshop.order;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,6 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -27,9 +28,9 @@ public class OrderItem {
     @JoinColumn(name = "order_id")
     private Order order;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @CollectionTable(name="product", joinColumns = @JoinColumn(name = "uproduct_id"))
+    @Column(name = "product", nullable = false)
+    private Long product;
 
     @Column(name = "price_per_product")
     private BigDecimal pricePerProduct;

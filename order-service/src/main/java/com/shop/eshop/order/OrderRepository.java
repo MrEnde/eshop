@@ -1,6 +1,5 @@
-package com.shop.eshop.repositories;
+package com.shop.eshop.order;
 
-import com.shop.eshop.models.Order;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
