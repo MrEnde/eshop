@@ -1,4 +1,4 @@
-package com.shop.eshop.exception;
+package com.shop.eshop.common.exceptions;
 
 public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(String message) {
