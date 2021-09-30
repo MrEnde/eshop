@@ -1,0 +1,12 @@
+server:
+  port: 8421
+
+spring:
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        bootstrap: true
+        native:
+          search-locations: /var/www/config-service/configs/

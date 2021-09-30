@@ -9,11 +9,102 @@ services:
         ENABLED_MODULES: brotli
     command: nginx
     volumes:
-      - ./config/nginx/development/:/etc/nginx/:z
+      - ./configs/nginx/development/:/etc/nginx/:z
 #    depends_on:
-#      - gateway-service
+#      - frontend-service
     networks:
       - proxy-network
 
+  config-service:
+    image: eshop_config-service:development
+    build:
+      context: .
+      dockerfile: ./docker/service/Dockerfile
+      args:
+        MODULES: ":config-service"
+        PROJECT_NAME: config-service
+        SERVICE_NAME: config
+    volumes:
+      - ./configs/services/:/var/www/config-service/configs/
+    command: server
+    networks:
+      - config-network
+
+  discovery-service:
+    image: eshop_discovery-service:development
+    build:
+      context: .
+      dockerfile: ./docker/service/Dockerfile
+      args:
+        MODULES: ":discovery-service"
+        PROJECT_NAME: discovery-service
+        SERVICE_NAME: discovery
+    command: server
+    networks:
+      - discovery-network
+
+  gateway-service:
+    image: eshop_gateway-service:development
+    build:
+      context: .
+      dockerfile: ./docker/service/Dockerfile
+      args:
+        MODULES: ":gateway-service"
+        PROJECT_NAME: gateway-service
+        SERVICE_NAME: gateway
+    command: server
+    depends_on:
+      - auth-service
+      - discovery-service
+      - config-service
+      - secrets-service
+    networks:
+      - proxy-network
+      - auth-network
+      - discovery-network
+      - config-network
+      - secrets-network
+
+  db-auth:
+    image: postgres:13.4-alpine
+    environment:
+      - POSTGRES_USER=keycloak
+      - POSTGRES_PASSWORD=keycloak
+    networks:
+      - auth-network
+      - db-auth-network
+
+  auth-service:
+    image: jboss/keycloak:15.0.2
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: db-auth:5432
+      DB_USER: keycloak
+      DB_PASSWORD: keycloak
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+    depends_on:
+      - db-auth
+    networks:
+      - db-auth-network
+      - auth-network
+
+  secrets-service:
+    image: vault:1.8.3
+    volumes:
+      - ./configs/vault/:/vault/
+    env_file:
+      - ./configs/env/vault/.env
+    cap_add:
+      - IPC_LOCK
+    command: vault server -config=/vault/config/vault.json
+    networks:
+      - secrets-network
+
 networks:
+  secrets-network:
   proxy-network:
+  db-auth-network:
+  auth-network:
+  discovery-network:
+  config-network:
