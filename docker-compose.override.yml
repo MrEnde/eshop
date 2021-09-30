@@ -1,5 +1,29 @@
 services:
   proxy:
     ports:
-      - 80:80
-  #      - 443:443
+      - "80:80"
+
+  config-service:
+    ports:
+      - 8421
+
+  gateway-service:
+    ports:
+      - "5555:5555"
+
+  discovery-service:
+    ports:
+      - 8761
+
+  db-auth:
+    ports:
+      - 5434
+
+  auth-service:
+    ports:
+      - 8080
+
+  secrets-service:
+    ports:
+      - 8200
+      - "8201:8201"
