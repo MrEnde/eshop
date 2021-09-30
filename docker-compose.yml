@@ -9,7 +9,7 @@ services:
         ENABLED_MODULES: brotli
     command: nginx
     volumes:
-      - ./config/nginx/development/:/etc/nginx/:z
+      - ./configs/nginx/development/:/etc/nginx/:z
 #    depends_on:
 #      - gateway-service
     networks:
